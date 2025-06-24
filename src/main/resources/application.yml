@@ -1,0 +1,32 @@
+server:
+  port: 8080
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - AddRequestHeader=gateway-env, springcloud-gateway
+      discovery:
+        locator:
+          enabled: true  # 开启服务发现
+          lower-case-service-id: true  # 服务ID小写
+        routes:
+          - id: "api_route"
+            uri: lb://api-service  # 使用服务名+负载均衡
+            predicates:
+              - Path=/api/**
+            filters:
+              - PreserveHostHeader
+          - id: "user_route"
+            uri: lb://user-service
+            predicates:
+              - Path=/user/**
+            filters:
+              - PreserveHostHeader
+          - id: "game_route"
+            uri: lb://game-service
+            predicates:
+              - Path=/game/**
+            filters:
+              - PreserveHostHeader
+  codec:
+    max-in-memory-size: 5MB # 修复拦截POST请求后内存超出缓冲区
