@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    include: kubernetes  # 显式激活k8s配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus

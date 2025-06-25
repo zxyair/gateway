@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    kubernetes:
+      enabled: false
+      discovery:
+        enabled: false
+management:
+  endpoint:
+    health:
+      show-details: always
